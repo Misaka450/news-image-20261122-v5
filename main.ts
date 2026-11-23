@@ -1,12 +1,9 @@
-import { mkdirSync, copyFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const currentDir = dirname(fileURLToPath(import.meta.url));
-const sourceImagePath = join(currentDir, 'entry.png');
-const targetOutputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
-const targetImagePath = join(targetOutputDir, 'entry.png');
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-mkdirSync(targetOutputDir, { recursive: true });
-copyFileSync(sourceImagePath, targetImagePath);
-process.exitCode = 0;
+mkdirSync(outDir, { recursive: true });
+copyFileSync(join(scriptDir, 'entry.png'), join(outDir, 'entry.png'));
